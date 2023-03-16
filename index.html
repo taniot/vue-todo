@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Todo List</title>
+
+    <!-- font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- My Css-->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <div class="container">
+                <h1 class="text-center my-5">{{ pageTitle }}</h1>
+            </div>
+        </header>
+        <main>
+            <div class="container">
+                <div class="row">
+                    <div class="col col-md-7 mx-auto">
+                        <div class="input-group mb-3">
+                            <input @keyup.enter="addTodo" v-model="newTodo" type="text" class="form-control"
+                                placeholder="Inserisci il tuo todo" aria-label="Recipient's username"
+                                aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                                @click="addTodo">Aggiungi</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-md-7 mx-auto">
+                        <div class="input-group mb-3">
+                            <input v-model="searchKey" @keyup="filteredList" type="text" class="form-control"
+                                placeholder="Cerca nei todo" aria-label="Recipient's username"
+                                aria-describedby="button-addon2">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row Element Todo-->
+                <div class="row">
+                    <div class="col col-md-7 mx-auto">
+                        <ul class="list-group" v-if="todoList.length > 0">
+                            <!-- elemento da ripetere -->
+                            <li v-for="(todo, index) in filteredList()" @click="toggleTodo(index)" 
+                                :class="{ done: todo.done }"
+                                class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span>{{index}} {{ todo['text'] }}</span>
+                                </div>
+                                <i role="button" class="fa-solid fa-trash" @click.stop="deleteTodo(index)"></i>
+                            </li>
+                            
+                            <!-- /elemento da ripetere -->
+
+                        </ul>
+                        <div class="alert alert-info mt-4" role="alert" v-else>
+                            Nessun elemento trovato
+                        </div>
+                    </div>
+                </div>
+                <!-- /Row Element Todo-->
+            </div>
+        </main>
+
+    </div>
+    <!-- VueJS-->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- My Js-->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
